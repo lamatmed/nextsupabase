@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useAuth } from "./useAuth";
 import { useState } from "react";
+import Swal from 'sweetalert2';
 
 export default function Navbar() {
   const { isLoggedIn, user, loading, logout } = useAuth();
@@ -21,6 +22,35 @@ export default function Navbar() {
       </nav>
     );
   }
+
+  const handleLogout = async () => {
+    const result = await Swal.fire({
+      title: 'Se déconnecter ?',
+      text: 'Voulez-vous vraiment vous déconnecter ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Oui',
+      cancelButtonText: 'Annuler',
+    });
+    if (result.isConfirmed) {
+      logout();
+    }
+  };
+
+  const handleLogoutMobile = async () => {
+    const result = await Swal.fire({
+      title: 'Se déconnecter ?',
+      text: 'Voulez-vous vraiment vous déconnecter ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Oui',
+      cancelButtonText: 'Annuler',
+    });
+    if (result.isConfirmed) {
+      logout();
+      setIsMenuOpen(false);
+    }
+  };
 
   return (
     <nav className="w-full bg-white/95 backdrop-blur-lg border-b border-gray-200 shadow-lg sticky top-0 z-50">
@@ -69,7 +99,7 @@ export default function Navbar() {
                 )}
 
                 <button
-                  onClick={logout}
+                  onClick={handleLogout}
                   className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-2 rounded-xl font-medium shadow-lg hover:shadow-red-500/25 transition-all duration-300 hover:scale-105 group"
                 >
                   <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,10 +192,7 @@ export default function Navbar() {
                   )}
 
                   <button
-                    onClick={() => {
-                      logout();
-                      setIsMenuOpen(false);
-                    }}
+                    onClick={handleLogoutMobile}
                     className="flex items-center gap-3 bg-gradient-to-r from-red-500 to-pink-500 text-white px-4 py-3 rounded-xl font-medium shadow-lg hover:shadow-red-500/25 transition-all duration-300 group w-full justify-start"
                   >
                     <svg className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">

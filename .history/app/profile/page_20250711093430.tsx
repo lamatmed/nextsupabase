@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { useState, useEffect } from "react";
@@ -140,14 +139,13 @@ export default function ProfilePage() {
                       />
                     </div>
                   </div>
-                  <input type="hidden" name="userId" value={user?.id ?? ''} />
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <button
                     type="submit"
-                    disabled={loading || !user?.id}
-                    className="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white py-3 px-6 rounded-xl font-medium shadow-lg hover:shadow-green-500/25 transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 text-sm sm:text-base"
+                    disabled={loading}
+                    className="flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-blue-500 text-white px-6 py-3 rounded-xl font-medium shadow-lg hover:shadow-green-500/25 transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-sm sm:text-base"
                   >
                     {loading ? (
                       <>

@@ -6,10 +6,11 @@ import { useEffect } from "react";
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requireAuth?: boolean; // true = besoin d'être connecté, false = besoin d'être déconnecté
+  adminOnly?: boolean; // true = seulement admin
 }
 
-export default function ProtectedRoute({ children, requireAuth = true }: ProtectedRouteProps) {
-  const { isLoggedIn, loading } = useAuth();
+export default function ProtectedRoute({ children, requireAuth = true, adminOnly = false }: ProtectedRouteProps) {
+  const { isLoggedIn, user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -20,9 +21,12 @@ export default function ProtectedRoute({ children, requireAuth = true }: Protect
       } else if (!requireAuth && isLoggedIn) {
         // Si la page nécessite d'être déconnecté mais l'utilisateur est connecté
         router.push("/dashboard");
+      } else if (adminOnly && (!user || !user.isAdmin)) {
+        // Si la page nécessite d'être admin mais l'utilisateur n'est pas admin
+        router.push("/dashboard");
       }
     }
-  }, [isLoggedIn, loading, requireAuth, router]);
+  }, [isLoggedIn, loading, requireAuth, adminOnly, user, router]);
 
   // Afficher un loader pendant la vérification
   if (loading) {
@@ -43,6 +47,11 @@ export default function ProtectedRoute({ children, requireAuth = true }: Protect
 
   // Si la page nécessite d'être déconnecté et l'utilisateur est connecté
   if (!requireAuth && isLoggedIn) {
+    return null; // Ne rien afficher, la redirection se fait dans useEffect
+  }
+
+  // Si la page nécessite d'être admin et l'utilisateur n'est pas admin
+  if (adminOnly && (!user || !user.isAdmin)) {
     return null; // Ne rien afficher, la redirection se fait dans useEffect
   }
 

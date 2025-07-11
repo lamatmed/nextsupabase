@@ -10,7 +10,7 @@ datasource db {
 }
 model User {
   id        String    @id @default(uuid())
-  fullName     String
+   full     String
   phone     String    @unique
   password String
   isAdmin Boolean @default(false)

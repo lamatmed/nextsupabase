@@ -36,7 +36,7 @@ export default function DashboardPage() {
              <div className="mt-6 flex justify-center">
                 <Link href="/projects">
                   <span className="inline-block bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-xl font-medium shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105">
-                    Gérer vous projets
+                    Gérer vous pri
                   </span>
                 </Link>
               </div>

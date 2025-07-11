@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Configuration de base pour Next.js
+  serverExternalPackages: ['@prisma/client'],
+  output: 'standalone',
 };
 
 export default nextConfig;
